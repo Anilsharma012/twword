@@ -524,13 +524,13 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
         db.collection("new_projects").deleteMany({}),
         db.collection("new_project_banners").deleteMany({}),
       ]);
-      console.log(`✅ Cleared ${existingCount} existing projects and banners`);
+      console.log(`�� Cleared ${existingCount} existing projects and banners`);
     }
 
     const defaultProjects: Omit<NewProject, "_id">[] = [
       {
-        name: "Aashish Green Valley",
-        slug: "aashish-green-valley",
+        name: "Ashish Green Valley",
+        slug: "ashish-green-valley",
         description: "Premium residential project with modern amenities and green spaces",
         location: "Sector 14, Rohtak",
         price: 4500000,
@@ -538,7 +538,7 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
         status: "upcoming",
         launchDate: "2024-06-01",
         completionDate: "2026-12-31",
-        developer: "Aashish Properties",
+        developer: "Ashish Properties",
         amenities: ["Swimming Pool", "Gym", "Garden", "Parking", "Security"],
         images: [
           "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
@@ -557,8 +557,8 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
         updatedAt: new Date(),
       },
       {
-        name: "Aashish Heights",
-        slug: "aashish-heights",
+        name: "Ashish Heights",
+        slug: "ashish-heights",
         description: "Luxury apartments with panoramic city views",
         location: "Civil Lines, Rohtak",
         price: 6500000,
@@ -566,7 +566,7 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
         status: "ongoing",
         launchDate: "2023-01-15",
         completionDate: "2025-06-30",
-        developer: "Aashish Properties",
+        developer: "Ashish Properties",
         amenities: ["Club House", "Elevator", "Power Backup", "Security"],
         images: [
           "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop",
@@ -587,19 +587,19 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
 
     const defaultBanners: Omit<NewProjectBanner, "_id">[] = [
       {
-        title: "Discover Aashish Green Valley",
+        title: "Discover Ashish Green Valley",
         subtitle: "Premium living spaces in Rohtak",
         imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=400&fit=crop",
-        link: "/new-projects/aashish-green-valley",
+        link: "/new-projects/ashish-green-valley",
         isActive: true,
         sortOrder: 1,
         createdAt: new Date(),
       },
       {
-        title: "Aashish Heights - Now Booking",
+        title: "Ashish Heights - Now Booking",
         subtitle: "Luxury apartments with city views",
         imageUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=400&fit=crop",
-        link: "/new-projects/aashish-heights",
+        link: "/new-projects/ashish-heights",
         isActive: true,
         sortOrder: 2,
         createdAt: new Date(),
