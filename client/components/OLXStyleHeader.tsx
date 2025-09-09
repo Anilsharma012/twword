@@ -81,7 +81,11 @@ export default function OLXStyleHeader() {
   };
 
   const handleFavoritesClick = () => {
-    window.location.href = "/favorites";
+    if (!isAuthenticated) {
+      window.location.href = `/login?redirectTo=${encodeURIComponent("/wishlist")}`;
+    } else {
+      window.location.href = "/wishlist";
+    }
   };
 
   const handleMenuClick = () => {
@@ -103,7 +107,7 @@ export default function OLXStyleHeader() {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <div className="text-2xl font-bold text-white">
-              Aashish Properties
+              Ashish Properties
             </div>
           </div>
 
