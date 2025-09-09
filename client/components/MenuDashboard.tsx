@@ -286,8 +286,8 @@ export default function MenuDashboard({ onClose }: MenuDashboardProps) {
       buyer: [
         {
           icon: <Heart className="h-4 w-4" />,
-          label: "Favorites",
-          path: "/favorites",
+          label: "Wishlist",
+          path: "/wishlist",
         },
         {
           icon: <Eye className="h-4 w-4" />,
