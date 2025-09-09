@@ -57,7 +57,7 @@ export default function DynamicPage() {
           if (data.data.metaTitle) {
             document.title = data.data.metaTitle;
           } else {
-            document.title = `${data.data.title} - Aashish Properties`;
+            document.title = `${data.data.title} - Ashish Properties`;
           }
           
           if (data.data.metaDescription) {
