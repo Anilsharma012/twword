@@ -41,7 +41,7 @@ export default function Header() {
             <span className="text-[#C70000] font-bold text-lg">A</span>
           </div>
           <span className="text-xl font-bold tracking-wide">
-            AASHISH PROPERTY
+            ASHISH PROPERTY
           </span>
         </div>
 
@@ -214,7 +214,7 @@ export default function Header() {
           </a>
         </div>
         <div className="flex space-x-4">
-          <button className="p-2 bg-white bg-opacity-20 rounded-lg">
+          <button className="p-2 bg-white bg-opacity-20 rounded-lg" onClick={() => (window.location.href = "/wishlist")}>
             <Heart className="h-5 w-5" />
           </button>
           <button className="p-2 bg-white bg-opacity-20 rounded-lg">
