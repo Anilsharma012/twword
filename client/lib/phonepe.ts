@@ -302,7 +302,7 @@ class PhonePeService {
     // This would need the merchant VPA from PhonePe
     const upiId = "merchant@phonepe"; // Replace with actual merchant UPI ID
 
-    return `upi://pay?pa=${upiId}&pn=Aashish Property&am=${amount}&cu=INR&tn=${note}&tr=${transactionId}`;
+    return `upi://pay?pa=${upiId}&pn=Ashish Property&am=${amount}&cu=INR&tn=${note}&tr=${transactionId}`;
   }
 }
 
