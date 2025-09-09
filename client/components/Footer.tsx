@@ -813,7 +813,7 @@ export default function Footer() {
                 Sitemap
               </Link>
               <Link
-                to="/help"
+                to="/support/help"
                 className="text-red-100 hover:text-white transition-colors"
               >
                 Help Center
