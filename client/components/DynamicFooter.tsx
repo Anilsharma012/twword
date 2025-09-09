@@ -620,7 +620,7 @@ export default function DynamicFooter() {
                   </li>
                   <li>
                     <Link
-                      to="/contact"
+                      to="/contact-us"
                       className="text-red-200 hover:text-white transition-colors duration-200 text-sm"
                     >
                       Contact Us
@@ -654,7 +654,7 @@ export default function DynamicFooter() {
                 <>
                   <li>
                     <Link
-                      to="/about"
+                      to="/about-us"
                       className="text-red-200 hover:text-white transition-colors duration-200 text-sm"
                     >
                       About Us
@@ -662,7 +662,7 @@ export default function DynamicFooter() {
                   </li>
                   <li>
                     <Link
-                      to="/help"
+                      to="/support/help"
                       className="text-red-200 hover:text-white transition-colors duration-200 text-sm"
                     >
                       Help Center
