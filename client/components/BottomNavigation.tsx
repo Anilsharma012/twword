@@ -53,7 +53,7 @@ export default function BottomNavigation() {
             return (
               <div key="add-button" className="flex-1 flex justify-center">
                 <a
-                  href="/post-property"
+                  href={isAuthenticated ? "/post-property" : `/auth?returnTo=${encodeURIComponent("/post-property")}`}
                   className="w-14 h-14 bg-[#C70000] rounded-full flex items-center justify-center shadow-lg transform -translate-y-2 hover:bg-[#A60000] transition-colors active:scale-95"
                 >
                   <Plus className="h-6 w-6 text-white" />
