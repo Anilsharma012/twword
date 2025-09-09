@@ -30,7 +30,6 @@ import {
   ArrowLeft,
   Home,
   UserCheck,
-  ShieldserCheck,
   Shield,
 } from "lucide-react";
 import UnifiedLoginNotice from "../components/UnifiedLoginNotice";
