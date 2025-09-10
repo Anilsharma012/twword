@@ -380,7 +380,7 @@ export const getPaymentMethodsWithPhonePe: RequestHandler = async (
         bankName: "State Bank of India",
         accountNumber: "1234567890",
         ifscCode: "SBIN0001234",
-        accountHolder: "Aashish Property",
+        accountHolder: "Ashish Property",
       },
       online: {
         enabled: true,
