@@ -22,6 +22,7 @@ import {
   Briefcase,
   RefreshCw,
   ArrowRight,
+  Edit,
 } from "lucide-react";
 
 interface MenuDashboardProps {

@@ -3,7 +3,11 @@ import cors from "cors";
 import "dotenv/config";
 
 import { connectToDatabase, getDatabase } from "./db/mongodb";
-import { authenticateToken, requireAdmin, requireSellerOrAgent } from "./middleware/auth";
+import {
+  authenticateToken,
+  requireAdmin,
+  requireSellerOrAgent,
+} from "./middleware/auth";
 import { ChatSocketServer } from "./socketio";
 
 // Property routes
@@ -504,6 +508,31 @@ let socketServer: ChatSocketServer;
 export function createServer() {
   const app = express();
 
+  // Allow embedding inside iframes for preview environments
+  app.use((req, res, next) => {
+    try {
+      res.setHeader("X-Frame-Options", "ALLOWALL");
+      const cspAncestors = [
+        "'self'",
+        "*.projects.builder.codes",
+        "*.builder.codes",
+        "*.netlify.app",
+        "http://localhost:*",
+        "https://localhost:*",
+        "http://127.0.0.1:*",
+        "https://127.0.0.1:*",
+      ].join(" ");
+      const existing = res.getHeader("Content-Security-Policy");
+      const frameAncestors = `frame-ancestors ${cspAncestors}`;
+      if (!existing) {
+        res.setHeader("Content-Security-Policy", frameAncestors);
+      }
+    } catch {}
+    next();
+  });
+
+  const isDev = process.env.NODE_ENV !== "production";
+
   const allowedOrigins = [
     "https://aproperty.netlify.app",
     "https://ashishproperties.in",
@@ -539,13 +568,19 @@ export function createServer() {
       origin: function (origin, callback) {
         if (!origin) return callback(null, true);
 
+        // In development, allow all origins for ease of preview/iframe
+        if (isDev) {
+          console.log("✅ CORS allowed (dev):", origin);
+          return callback(null, true);
+        }
+
         // Allow listed exact origins
         if (allowedOrigins.includes(origin)) {
           console.log("✅ CORS allowed (exact):", origin);
           return callback(null, true);
         }
 
-        // Allow pattern-based origins (covers dynamic Fly.dev and Builder preview URLs) in all environments
+        // Allow pattern-based origins (covers dynamic Fly.dev and Builder preview URLs)
         if (allowedOriginPatterns.some((re) => re.test(origin))) {
           console.log("✅ CORS allowed (pattern):", origin);
           return callback(null, true);
@@ -986,24 +1021,22 @@ export function createServer() {
           disabledRoutes = [],
           testMode = false,
         } = req.body || {};
-        await db
-          .collection("admin_settings")
-          .updateOne(
-            {},
-            {
-              $set: {
-                adsense: {
-                  enabled: !!enabled,
-                  clientId: clientId || "",
-                  slots,
-                  disabledRoutes,
-                  testMode: !!testMode,
-                },
-                updatedAt: new Date(),
+        await db.collection("admin_settings").updateOne(
+          {},
+          {
+            $set: {
+              adsense: {
+                enabled: !!enabled,
+                clientId: clientId || "",
+                slots,
+                disabledRoutes,
+                testMode: !!testMode,
               },
+              updatedAt: new Date(),
             },
-            { upsert: true },
-          );
+          },
+          { upsert: true },
+        );
         res.json({
           success: true,
           data: { message: "AdSense settings updated" },
