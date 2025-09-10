@@ -332,7 +332,7 @@ export const initializeBanners: RequestHandler = async (req, res) => {
 
     const defaultBanners: Omit<BannerAd, "_id">[] = [
       {
-        title: "Welcome to Aashish Property",
+        title: "Welcome to Ashish Property",
         imageUrl:
           "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=400&fit=crop",
         link: "/properties",
