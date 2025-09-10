@@ -504,6 +504,29 @@ let socketServer: ChatSocketServer;
 export function createServer() {
   const app = express();
 
+  // Allow embedding inside iframes for preview environments
+  app.use((req, res, next) => {
+    try {
+      res.setHeader("X-Frame-Options", "ALLOWALL");
+      const cspAncestors = [
+        "'self'",
+        "*.projects.builder.codes",
+        "*.builder.codes",
+        "*.netlify.app",
+        "http://localhost:*",
+        "https://localhost:*",
+        "http://127.0.0.1:*",
+        "https://127.0.0.1:*",
+      ].join(" ");
+      const existing = res.getHeader("Content-Security-Policy");
+      const frameAncestors = `frame-ancestors ${cspAncestors}`;
+      if (!existing) {
+        res.setHeader("Content-Security-Policy", frameAncestors);
+      }
+    } catch {}
+    next();
+  });
+
   const allowedOrigins = [
     "https://aproperty.netlify.app",
     "https://ashishproperties.in",
