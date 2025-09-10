@@ -3,7 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 
 import { connectToDatabase, getDatabase } from "./db/mongodb";
-import { authenticateToken, requireAdmin } from "./middleware/auth";
+import { authenticateToken, requireAdmin, requireSellerOrAgent } from "./middleware/auth";
 import { ChatSocketServer } from "./socketio";
 
 // Property routes

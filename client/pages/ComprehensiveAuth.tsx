@@ -30,7 +30,6 @@ import {
   ArrowLeft,
   Home,
   UserCheck,
-  ShieldserCheck,
   Shield,
 } from "lucide-react";
 import UnifiedLoginNotice from "../components/UnifiedLoginNotice";
@@ -129,7 +128,7 @@ const ComprehensiveAuth = () => {
 
         if (!isLogin) {
           // Registration successful
-          setSuccess("Registration successful! Welcome to Aashish Property.");
+          setSuccess("Registration successful! Welcome to Ashish Property.");
           setTimeout(() => {
             login(token, user);
             redirectToCorrectDashboard(user.userType);
@@ -310,7 +309,7 @@ const handleGoogleAuth = async (e?: React.MouseEvent) => {
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Home className="h-6 w-6" />
-            <h1 className="text-xl font-bold">AASHISH PROPERTY</h1>
+            <h1 className="text-xl font-bold">ASHISH PROPERTY</h1>
           </div>
           <Link to="/" className="text-white hover:text-red-200">
             <ArrowLeft className="h-5 w-5" />
@@ -322,7 +321,7 @@ const handleGoogleAuth = async (e?: React.MouseEvent) => {
       <div className="relative py-12 bg-gradient-to-r from-[#C70000] to-[#A50000] text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-4">
-            Welcome to Aashish Property
+            Welcome to Ashish Property
           </h2>
           <p className="text-xl mb-8">
             Your trusted partner in real estate solutions

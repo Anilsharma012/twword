@@ -42,7 +42,7 @@ export default function ContentPage() {
           if (data.data.metaTitle) {
             document.title = data.data.metaTitle;
           } else {
-            document.title = `${data.data.title} - Aashish Property`;
+            document.title = `${data.data.title} - Ashish Property`;
           }
 
           if (data.data.metaDescription) {

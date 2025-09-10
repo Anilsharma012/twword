@@ -120,7 +120,7 @@ const EnhancedUserLogin = () => {
 
         if (!isLogin) {
           // Registration successful
-          setSuccess("Registration successful! Welcome to Aashish Property. Redirecting to home page...");
+          setSuccess("Registration successful! Welcome to Ashish Property. Redirecting to home page...");
           setLoading(false);
 
           // Login user and redirect after showing success message
@@ -282,7 +282,7 @@ const handleGoogleLogin = async () => {
           <Card>
             <CardHeader>
               <CardTitle className="text-center">
-                Welcome to Aashish Property
+                Welcome to Ashish Property
               </CardTitle>
               <p className="text-center text-gray-600">
                 Choose your preferred login method

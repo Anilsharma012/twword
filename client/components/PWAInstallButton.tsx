@@ -110,7 +110,7 @@ const PWAInstallButton = () => {
       // Create a download link for the APK file
       const link = document.createElement("a");
       link.href = "/api/app/download";
-      link.download = "AashishProperty.apk";
+      link.download = "AshishProperty.apk";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

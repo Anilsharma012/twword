@@ -77,7 +77,7 @@ export default function DynamicFooter() {
   const [footerPages, setFooterPages] = useState<FooterPage[]>([]);
   const [footerLinks, setFooterLinks] = useState<FooterLink[]>([]);
   const [footerSettings, setFooterSettings] = useState<FooterSettings>({
-    companyName: "Aashish Properties",
+    companyName: "Ashish Properties",
     companyDescription:
       "Your trusted property partner in Rohtak. Find your dream home with verified listings and expert guidance.",
     companyLogo: "AP",
@@ -620,7 +620,7 @@ export default function DynamicFooter() {
                   </li>
                   <li>
                     <Link
-                      to="/contact"
+                      to="/contact-us"
                       className="text-red-200 hover:text-white transition-colors duration-200 text-sm"
                     >
                       Contact Us
@@ -654,7 +654,7 @@ export default function DynamicFooter() {
                 <>
                   <li>
                     <Link
-                      to="/about"
+                      to="/about-us"
                       className="text-red-200 hover:text-white transition-colors duration-200 text-sm"
                     >
                       About Us
@@ -662,7 +662,7 @@ export default function DynamicFooter() {
                   </li>
                   <li>
                     <Link
-                      to="/help"
+                      to="/support/help"
                       className="text-red-200 hover:text-white transition-colors duration-200 text-sm"
                     >
                       Help Center

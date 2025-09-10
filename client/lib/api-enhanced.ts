@@ -323,7 +323,7 @@ const getFallbackData = (endpoint: string) => {
     return {
       success: true,
       data: {
-        companyName: "Aashish Properties",
+        companyName: "Ashish Properties",
         companyDescription:
           "Your trusted property partner in Rohtak. Find your dream home with verified listings and expert guidance.",
         companyLogo: "AP",

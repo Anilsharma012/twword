@@ -33,7 +33,7 @@ export default function StaticFooter() {
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
                 <span className="text-[#C70000] font-bold text-xl">AP</span>
               </div>
-              <h3 className="text-2xl font-bold">Aashish Properties</h3>
+              <h3 className="text-2xl font-bold">Ashish Properties</h3>
             </div>
 
             <p className="text-red-100 text-sm leading-relaxed">
@@ -188,7 +188,7 @@ export default function StaticFooter() {
             <ul className="space-y-3">
               <li>
                 <Link
-                  to="/p/about-us"
+                  to="/about-us"
                   className="text-red-200 hover:text-white transition-colors duration-200 text-sm"
                 >
                   About Us
@@ -196,7 +196,7 @@ export default function StaticFooter() {
               </li>
               <li>
                 <Link
-                  to="/contact"
+                  to="/contact-us"
                   className="text-red-200 hover:text-white transition-colors duration-200 text-sm"
                 >
                   Contact Us
@@ -220,7 +220,7 @@ export default function StaticFooter() {
               </li>
               <li>
                 <Link
-                  to="/help"
+                  to="/support/help"
                   className="text-red-200 hover:text-white transition-colors duration-200 text-sm"
                 >
                   Help Center
@@ -239,7 +239,7 @@ export default function StaticFooter() {
             <div className="flex items-center space-x-2 text-sm">
               <Calendar className="h-4 w-4" />
               <span>
-                All rights reserved © 2006-{new Date().getFullYear()} Aashish
+                All rights reserved © 2006-{new Date().getFullYear()} Ashish
                 Properties
               </span>
             </div>
