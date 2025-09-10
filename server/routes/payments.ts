@@ -487,7 +487,7 @@ export const getPaymentMethods: RequestHandler = async (req, res) => {
         bankName: "State Bank of India",
         accountNumber: "1234567890",
         ifscCode: "SBIN0001234",
-        accountHolder: "Aashish Property Services",
+        accountHolder: "Ashish Property Services",
       },
       online: {
         enabled: true,
