@@ -529,7 +529,7 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
 
     const defaultProjects: Omit<NewProject, "_id">[] = [
       {
-        name: "Aashish Green Valley",
+        name: "Ashish Green Valley",
         slug: "aashish-green-valley",
         description: "Premium residential project with modern amenities and green spaces",
         location: "Sector 14, Rohtak",
@@ -557,7 +557,7 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
         updatedAt: new Date(),
       },
       {
-        name: "Aashish Heights",
+        name: "Ashish Heights",
         slug: "aashish-heights",
         description: "Luxury apartments with panoramic city views",
         location: "Civil Lines, Rohtak",
@@ -587,7 +587,7 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
 
     const defaultBanners: Omit<NewProjectBanner, "_id">[] = [
       {
-        title: "Discover Aashish Green Valley",
+        title: "Discover Ashish Green Valley",
         subtitle: "Premium living spaces in Rohtak",
         imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=400&fit=crop",
         link: "/new-projects/aashish-green-valley",
@@ -596,7 +596,7 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
         createdAt: new Date(),
       },
       {
-        title: "Aashish Heights - Now Booking",
+        title: "Ashish Heights - Now Booking",
         subtitle: "Luxury apartments with city views",
         imageUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=400&fit=crop",
         link: "/new-projects/aashish-heights",
