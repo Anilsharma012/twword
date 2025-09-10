@@ -239,7 +239,7 @@ export default function StaticFooter() {
             <div className="flex items-center space-x-2 text-sm">
               <Calendar className="h-4 w-4" />
               <span>
-                All rights reserved © 2006-{new Date().getFullYear()} Aashish
+                All rights reserved © 2006-{new Date().getFullYear()} Ashish
                 Properties
               </span>
             </div>
