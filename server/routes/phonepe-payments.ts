@@ -19,9 +19,9 @@ const getPhonePeConfig = async (): Promise<PhonePeConfig | null> => {
 
     console.log("📋 PhonePe config check:", {
       hasSettings: !!settings,
-      hasPayment: !!(settings?.payment),
-      hasPhonePe: !!(settings?.payment?.phonePe),
-      enabled: settings?.payment?.phonePe?.enabled
+      hasPayment: !!settings?.payment,
+      hasPhonePe: !!settings?.payment?.phonePe,
+      enabled: settings?.payment?.phonePe?.enabled,
     });
 
     if (
@@ -37,7 +37,7 @@ const getPhonePeConfig = async (): Promise<PhonePeConfig | null> => {
         console.error("❌ PhonePe configuration incomplete:", {
           hasMerchantId: !!config.merchantId,
           hasSaltKey: !!config.saltKey,
-          hasSaltIndex: !!config.saltIndex
+          hasSaltIndex: !!config.saltIndex,
         });
         return null;
       }
@@ -263,14 +263,15 @@ export const createPhonePeTransaction: RequestHandler = async (req, res) => {
       packageId,
       propertyId,
       paymentMethod,
-      paymentDetails
+      paymentDetails,
     });
 
     // Validate required fields
     if (!packageId || !paymentMethod || !paymentDetails) {
       return res.status(400).json({
         success: false,
-        error: "Missing required fields: packageId, paymentMethod, paymentDetails",
+        error:
+          "Missing required fields: packageId, paymentMethod, paymentDetails",
       });
     }
 
@@ -288,7 +289,8 @@ export const createPhonePeTransaction: RequestHandler = async (req, res) => {
     if (!phonePeConfig) {
       return res.status(400).json({
         success: false,
-        error: "PhonePe is not configured or enabled. Please check admin settings.",
+        error:
+          "PhonePe is not configured or enabled. Please check admin settings.",
       });
     }
 
@@ -316,7 +318,7 @@ export const createPhonePeTransaction: RequestHandler = async (req, res) => {
     console.log("✅ Package found:", {
       id: packageData._id,
       name: packageData.name,
-      price: packageData.price
+      price: packageData.price,
     });
 
     // Create transaction record

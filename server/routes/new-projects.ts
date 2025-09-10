@@ -50,7 +50,7 @@ async function generateUniqueSlug(db: any, name: string): Promise<string> {
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
     .trim();
-  
+
   let slug = baseSlug;
   let counter = 1;
 
@@ -331,7 +331,9 @@ export const createNewProjectBanner: RequestHandler = async (req, res) => {
       createdAt: new Date(),
     };
 
-    const result = await db.collection("new_project_banners").insertOne(newBanner);
+    const result = await db
+      .collection("new_project_banners")
+      .insertOne(newBanner);
 
     const response: ApiResponse<{ _id: string; banner: NewProjectBanner }> = {
       success: true,
@@ -531,7 +533,8 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
       {
         name: "Ashish Green Valley",
         slug: "aashish-green-valley",
-        description: "Premium residential project with modern amenities and green spaces",
+        description:
+          "Premium residential project with modern amenities and green spaces",
         location: "Sector 14, Rohtak",
         price: 4500000,
         priceRange: "₹45L - ₹85L",
@@ -589,7 +592,8 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
       {
         title: "Discover Ashish Green Valley",
         subtitle: "Premium living spaces in Rohtak",
-        imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=400&fit=crop",
+        imageUrl:
+          "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=400&fit=crop",
         link: "/new-projects/aashish-green-valley",
         isActive: true,
         sortOrder: 1,
@@ -598,7 +602,8 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
       {
         title: "Ashish Heights - Now Booking",
         subtitle: "Luxury apartments with city views",
-        imageUrl: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=400&fit=crop",
+        imageUrl:
+          "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&h=400&fit=crop",
         link: "/new-projects/aashish-heights",
         isActive: true,
         sortOrder: 2,
@@ -608,7 +613,7 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
 
     // Insert projects
     await db.collection("new_projects").insertMany(defaultProjects);
-    
+
     // Insert banners
     await db.collection("new_project_banners").insertMany(defaultBanners);
 

@@ -185,24 +185,24 @@ export const getAllTransactions: RequestHandler = async (req, res) => {
               $cond: {
                 if: { $type: "$userId" },
                 then: { $toObjectId: "$userId" },
-                else: "$userId"
-              }
+                else: "$userId",
+              },
             },
             packageObjectId: {
               $cond: {
                 if: { $type: "$packageId" },
                 then: { $toObjectId: "$packageId" },
-                else: "$packageId"
-              }
+                else: "$packageId",
+              },
             },
             propertyObjectId: {
               $cond: {
                 if: { $type: "$propertyId" },
                 then: { $toObjectId: "$propertyId" },
-                else: "$propertyId"
-              }
-            }
-          }
+                else: "$propertyId",
+              },
+            },
+          },
         },
         {
           $lookup: {
@@ -235,8 +235,8 @@ export const getAllTransactions: RequestHandler = async (req, res) => {
             packageName: { $arrayElemAt: ["$package.name", 0] },
             propertyTitle: { $arrayElemAt: ["$property.title", 0] },
             // Ensure paymentDetails is preserved in the response
-            paymentDetails: { $ifNull: ["$paymentDetails", {}] }
-          }
+            paymentDetails: { $ifNull: ["$paymentDetails", {}] },
+          },
         },
         {
           $project: {
@@ -256,8 +256,8 @@ export const getAllTransactions: RequestHandler = async (req, res) => {
             userName: 1,
             userEmail: 1,
             packageName: 1,
-            propertyTitle: 1
-          }
+            propertyTitle: 1,
+          },
         },
         { $sort: { createdAt: -1 } },
         { $skip: skip },
@@ -313,7 +313,17 @@ export const updateTransactionStatus: RequestHandler = async (req, res) => {
       });
     }
 
-    if (!['pending', 'approved', 'rejected', 'processing', 'paid', 'failed', 'cancelled'].includes(status)) {
+    if (
+      ![
+        "pending",
+        "approved",
+        "rejected",
+        "processing",
+        "paid",
+        "failed",
+        "cancelled",
+      ].includes(status)
+    ) {
       return res.status(400).json({
         success: false,
         error: "Invalid status",
@@ -332,16 +342,16 @@ export const updateTransactionStatus: RequestHandler = async (req, res) => {
     }
 
     const updateData: any = {
-      status: status === 'approved' ? 'paid' : status, // Convert approved to paid for compatibility
+      status: status === "approved" ? "paid" : status, // Convert approved to paid for compatibility
       updatedAt: new Date(),
     };
 
-    if (status === 'approved' || status === 'paid') {
+    if (status === "approved" || status === "paid") {
       updateData.paidAt = new Date();
       updateData.processedBy = adminId;
     }
 
-    if (status === 'rejected') {
+    if (status === "rejected") {
       updateData.rejectedAt = new Date();
       updateData.processedBy = adminId;
     }
@@ -355,7 +365,10 @@ export const updateTransactionStatus: RequestHandler = async (req, res) => {
       .updateOne({ _id: new ObjectId(transactionId) }, { $set: updateData });
 
     // If marking as approved/paid, activate the property package
-    if ((status === "approved" || status === "paid") && transaction.propertyId) {
+    if (
+      (status === "approved" || status === "paid") &&
+      transaction.propertyId
+    ) {
       const package_ = await db
         .collection("ad_packages")
         .findOne({ _id: new ObjectId(transaction.packageId) });
@@ -381,7 +394,9 @@ export const updateTransactionStatus: RequestHandler = async (req, res) => {
 
     const response: ApiResponse<{ message: string }> = {
       success: true,
-      data: { message: `Transaction ${status === 'approved' ? 'approved' : status} successfully` },
+      data: {
+        message: `Transaction ${status === "approved" ? "approved" : status} successfully`,
+      },
     };
 
     res.json(response);

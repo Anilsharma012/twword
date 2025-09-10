@@ -46,30 +46,30 @@ export default function DynamicPage() {
       setError("");
 
       const response = await fetch(`/api/content/pages/slug/${pageSlug}`);
-      
+
       if (response.ok) {
         const data: ApiResponse<PageContent> = await response.json();
-        
+
         if (data.success && data.data) {
           setPage(data.data);
-          
+
           // Update page title and meta tags
           if (data.data.metaTitle) {
             document.title = data.data.metaTitle;
           } else {
             document.title = `${data.data.title} - Ashish Properties`;
           }
-          
+
           if (data.data.metaDescription) {
             let metaDesc = document.querySelector('meta[name="description"]');
             if (!metaDesc) {
-              metaDesc = document.createElement('meta');
-              metaDesc.setAttribute('name', 'description');
+              metaDesc = document.createElement("meta");
+              metaDesc.setAttribute("name", "description");
               document.head.appendChild(metaDesc);
             }
-            metaDesc.setAttribute('content', data.data.metaDescription);
+            metaDesc.setAttribute("content", data.data.metaDescription);
           }
-          
+
           // Track page view
           trackPageView(data.data._id);
         } else {
@@ -91,7 +91,7 @@ export default function DynamicPage() {
   const trackPageView = async (pageId: string) => {
     try {
       await fetch(`/api/content/pages/${pageId}/view`, {
-        method: 'POST',
+        method: "POST",
       });
     } catch (error) {
       // Silently fail for view tracking
@@ -125,19 +125,27 @@ export default function DynamicPage() {
 
   const getTypeDisplay = (type: string) => {
     switch (type) {
-      case "policy": return "Policy";
-      case "terms": return "Terms";
-      case "faq": return "FAQ";
-      default: return "Page";
+      case "policy":
+        return "Policy";
+      case "terms":
+        return "Terms";
+      case "faq":
+        return "FAQ";
+      default:
+        return "Page";
     }
   };
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case "policy": return "bg-blue-100 text-blue-800";
-      case "terms": return "bg-yellow-100 text-yellow-800";
-      case "faq": return "bg-green-100 text-green-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "policy":
+        return "bg-blue-100 text-blue-800";
+      case "terms":
+        return "bg-yellow-100 text-yellow-800";
+      case "faq":
+        return "bg-green-100 text-green-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
@@ -166,20 +174,24 @@ export default function DynamicPage() {
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              {error === "Page not found" ? "Page Not Found" : "Error Loading Page"}
+              {error === "Page not found"
+                ? "Page Not Found"
+                : "Error Loading Page"}
             </h1>
             <p className="text-gray-600 mb-8">
-              {error === "Page not found" 
+              {error === "Page not found"
                 ? "The page you're looking for doesn't exist or has been moved."
-                : "There was an error loading this page. Please try again."
-              }
+                : "There was an error loading this page. Please try again."}
             </p>
             <div className="space-x-4">
               <Button onClick={() => navigate(-1)} variant="outline">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Go Back
               </Button>
-              <Button onClick={() => navigate("/")} className="bg-[#C70000] hover:bg-[#A60000]">
+              <Button
+                onClick={() => navigate("/")}
+                className="bg-[#C70000] hover:bg-[#A60000]"
+              >
                 Go Home
               </Button>
             </div>
@@ -192,19 +204,19 @@ export default function DynamicPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <OLXStyleHeader />
-      
+
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <Button 
-            onClick={() => navigate(-1)} 
-            variant="outline" 
+          <Button
+            onClick={() => navigate(-1)}
+            variant="outline"
             className="mb-6"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back
           </Button>
-          
+
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center space-x-3 mb-4">
@@ -212,25 +224,29 @@ export default function DynamicPage() {
                   {getTypeDisplay(page.type)}
                 </Badge>
                 {page.views && (
-                  <Badge variant="outline" className="flex items-center space-x-1">
+                  <Badge
+                    variant="outline"
+                    className="flex items-center space-x-1"
+                  >
                     <Eye className="h-3 w-3" />
                     <span>{page.views} views</span>
                   </Badge>
                 )}
               </div>
-              
+
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 {page.title}
               </h1>
-              
+
               <div className="flex items-center space-x-6 text-sm text-gray-500">
                 <div className="flex items-center space-x-2">
                   <Clock className="h-4 w-4" />
                   <span>
-                    Updated {new Date(page.updatedAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
+                    Updated{" "}
+                    {new Date(page.updatedAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </span>
                 </div>
@@ -242,8 +258,8 @@ export default function DynamicPage() {
                 )}
               </div>
             </div>
-            
-            <Button 
+
+            <Button
               onClick={handleShare}
               variant="outline"
               size="sm"
@@ -258,8 +274,8 @@ export default function DynamicPage() {
         {/* Featured Image */}
         {page.featuredImage && (
           <div className="mb-8">
-            <img 
-              src={page.featuredImage} 
+            <img
+              src={page.featuredImage}
               alt={page.title}
               className="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg"
             />
@@ -268,7 +284,7 @@ export default function DynamicPage() {
 
         {/* Content */}
         <div className="bg-white rounded-lg shadow-sm p-8">
-          <div 
+          <div
             className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-[#C70000] prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-ul:text-gray-700 prose-ol:text-gray-700"
             dangerouslySetInnerHTML={{ __html: page.content }}
           />
@@ -277,16 +293,22 @@ export default function DynamicPage() {
         {/* Footer Actions */}
         <div className="mt-8 flex justify-between items-center">
           <div className="text-sm text-gray-500">
-            <p>This page was created through our admin panel and is dynamically loaded.</p>
+            <p>
+              This page was created through our admin panel and is dynamically
+              loaded.
+            </p>
             <p>Last updated: {new Date(page.updatedAt).toLocaleString()}</p>
           </div>
-          
+
           <div className="flex space-x-3">
             <Button onClick={handleShare} variant="outline" size="sm">
               <Share2 className="h-4 w-4 mr-2" />
               Share Page
             </Button>
-            <Button onClick={() => navigate("/")} className="bg-[#C70000] hover:bg-[#A60000]">
+            <Button
+              onClick={() => navigate("/")}
+              className="bg-[#C70000] hover:bg-[#A60000]"
+            >
               Explore Properties
             </Button>
           </div>

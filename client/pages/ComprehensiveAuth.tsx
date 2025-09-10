@@ -256,39 +256,38 @@ const ComprehensiveAuth = () => {
 
   // Google Login
   // Google Login (REAL Firebase popup + backend verify)
-const handleGoogleAuth = async (e?: React.MouseEvent) => {
-  e?.preventDefault();
-  if (loading) return;
+  const handleGoogleAuth = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    if (loading) return;
 
-  setLoading(true);
-  setError("");
-  setSuccess("");
+    setLoading(true);
+    setError("");
+    setSuccess("");
 
-  try {
-    // 1) Chrome account chooser popup -> Firebase ID token
-    const { idToken } = await signInWithGoogle();
+    try {
+      // 1) Chrome account chooser popup -> Firebase ID token
+      const { idToken } = await signInWithGoogle();
 
-    // 2) Ab demo payload NHI, sirf idToken (plus userType) backend ko
-    const { data } = await api.post("auth/google", {
-      idToken,
-      userType: formData.userType || "buyer",
-    });
+      // 2) Ab demo payload NHI, sirf idToken (plus userType) backend ko
+      const { data } = await api.post("auth/google", {
+        idToken,
+        userType: formData.userType || "buyer",
+      });
 
-    if (!data?.success) {
-      throw new Error(data?.error || "Google authentication failed");
+      if (!data?.success) {
+        throw new Error(data?.error || "Google authentication failed");
+      }
+
+      // 3) JWT + user context -> redirect
+      const { token, user } = data.data;
+      login(token, user);
+      redirectToCorrectDashboard(user.userType);
+    } catch (err: any) {
+      setError(err.message || "Google authentication failed");
+    } finally {
+      setLoading(false);
     }
-
-    // 3) JWT + user context -> redirect
-    const { token, user } = data.data;
-    login(token, user);
-    redirectToCorrectDashboard(user.userType);
-  } catch (err: any) {
-    setError(err.message || "Google authentication failed");
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   const redirectToCorrectDashboard = (userType: string) => {
     const routes = {
@@ -639,24 +638,23 @@ const handleGoogleAuth = async (e?: React.MouseEvent) => {
                     </p>
 
                     <Button
-  type="button"
-  onClick={handleGoogleAuth}
-  className="w-full bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
-  disabled={loading}
->
-  {loading ? (
-    <div className="flex items-center">
-      <div className="animate-spin h-4 w-4 border-2 border-gray-500 border-t-transparent rounded-full mr-2"></div>
-      Connecting...
-    </div>
-  ) : (
-    <div className="flex items-center">
-      {/* google icon svg ... */}
-      Continue with Google
-    </div>
-  )}
-</Button>
-
+                      type="button"
+                      onClick={handleGoogleAuth}
+                      className="w-full bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <div className="flex items-center">
+                          <div className="animate-spin h-4 w-4 border-2 border-gray-500 border-t-transparent rounded-full mr-2"></div>
+                          Connecting...
+                        </div>
+                      ) : (
+                        <div className="flex items-center">
+                          {/* google icon svg ... */}
+                          Continue with Google
+                        </div>
+                      )}
+                    </Button>
                   </div>
                 </div>
               )}

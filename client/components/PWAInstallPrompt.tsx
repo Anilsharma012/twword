@@ -4,20 +4,21 @@ import { X, Star, Download } from "lucide-react";
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
   readonly userChoice: Promise<{
-    outcome: 'accepted' | 'dismissed';
+    outcome: "accepted" | "dismissed";
     platform: string;
   }>;
   prompt(): Promise<void>;
 }
 
 export default function PWAInstallPrompt() {
-  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
     // Check if app is already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (window.matchMedia("(display-mode: standalone)").matches) {
       setIsInstalled(true);
       return;
     }
@@ -36,19 +37,22 @@ export default function PWAInstallPrompt() {
       setDeferredPrompt(null);
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    window.addEventListener('appinstalled', handleAppInstalled);
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    window.addEventListener("appinstalled", handleAppInstalled);
 
     // Show prompt after 2 seconds if not already shown
     const timer = setTimeout(() => {
-      if (!isInstalled && !localStorage.getItem('pwa-prompt-dismissed')) {
+      if (!isInstalled && !localStorage.getItem("pwa-prompt-dismissed")) {
         setShowPrompt(true);
       }
     }, 2000);
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('appinstalled', handleAppInstalled);
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt,
+      );
+      window.removeEventListener("appinstalled", handleAppInstalled);
       clearTimeout(timer);
     };
   }, [isInstalled]);
@@ -57,20 +61,22 @@ export default function PWAInstallPrompt() {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      
-      if (outcome === 'accepted') {
+
+      if (outcome === "accepted") {
         setDeferredPrompt(null);
         setShowPrompt(false);
       }
     } else {
       // Fallback for browsers that don't support the API
-      alert('To install this app, use your browser\'s "Add to Home Screen" option.');
+      alert(
+        'To install this app, use your browser\'s "Add to Home Screen" option.',
+      );
     }
   };
 
   const handleDismiss = () => {
     setShowPrompt(false);
-    localStorage.setItem('pwa-prompt-dismissed', 'true');
+    localStorage.setItem("pwa-prompt-dismissed", "true");
   };
 
   if (isInstalled || !showPrompt) {
@@ -95,8 +101,8 @@ export default function PWAInstallPrompt() {
               className="w-10 h-10"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                target.nextElementSibling?.classList.remove('hidden');
+                target.style.display = "none";
+                target.nextElementSibling?.classList.remove("hidden");
               }}
             />
             <div className="w-10 h-10 bg-[#C70000] rounded-xl hidden items-center justify-center">
@@ -110,10 +116,15 @@ export default function PWAInstallPrompt() {
           <div className="flex items-center justify-center space-x-1 mb-4">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                <Star
+                  key={i}
+                  className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                />
               ))}
             </div>
-            <span className="text-sm opacity-90 ml-2">4.5 • 10Cr+ Downloads</span>
+            <span className="text-sm opacity-90 ml-2">
+              4.5 • 10Cr+ Downloads
+            </span>
           </div>
 
           <button
