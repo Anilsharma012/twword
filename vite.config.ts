@@ -1,6 +1,6 @@
 import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import "dotenv/config"; 
+import "dotenv/config";
 import path from "path";
 import { createServer, initializeSocket } from "./server";
 
@@ -33,7 +33,8 @@ export default defineConfig(({ command }) => {
       strictPort: true,
       headers: {
         "X-Frame-Options": "ALLOWALL",
-        "Content-Security-Policy": "frame-ancestors 'self' *.projects.builder.codes *.builder.codes *.netlify.app http://localhost:* https://localhost:* http://127.0.0.1:* https://127.0.0.1:*",
+        "Content-Security-Policy":
+          "frame-ancestors 'self' *.projects.builder.codes *.builder.codes *.netlify.app http://localhost:* https://localhost:* http://127.0.0.1:* https://127.0.0.1:*",
         "Cross-Origin-Opener-Policy": "unsafe-none",
         "Cross-Origin-Embedder-Policy": "unsafe-none",
       },

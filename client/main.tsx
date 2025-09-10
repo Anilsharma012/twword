@@ -93,7 +93,10 @@ function initializeApp() {
           listenForegroundNotifications();
         }
       } catch (e) {
-        console.warn("Push setup failed (non-fatal):", (e as any)?.message || e);
+        console.warn(
+          "Push setup failed (non-fatal):",
+          (e as any)?.message || e,
+        );
       }
     }, 1500);
   }
