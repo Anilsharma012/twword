@@ -254,8 +254,8 @@ export const initializeContentPages: RequestHandler = async (req, res) => {
         slug: "about-us",
         content: `
           <div class="prose prose-lg">
-            <h1>About Aashish Property</h1>
-            <p>Welcome to Aashish Property, your trusted partner in real estate solutions in Rohtak and surrounding areas. We are committed to providing exceptional service in property buying, selling, and consultation.</p>
+            <h1>About Ashish Property</h1>
+            <p>Welcome to Ashish Property, your trusted partner in real estate solutions in Rohtak and surrounding areas. We are committed to providing exceptional service in property buying, selling, and consultation.</p>
             
             <h2>Our Mission</h2>
             <p>To make property transactions transparent, efficient, and hassle-free for all our clients. We believe in building long-term relationships based on trust and reliability.</p>
@@ -281,9 +281,9 @@ export const initializeContentPages: RequestHandler = async (req, res) => {
           </div>
         `,
         metaTitle:
-          "About Us - Aashish Property | Trusted Real Estate Partner in Rohtak",
+          "About Us - Ashish Property | Trusted Real Estate Partner in Rohtak",
         metaDescription:
-          "Learn more about Aashish Property, your trusted real estate partner in Rohtak. We provide residential and commercial property solutions with exceptional service.",
+          "Learn more about Ashish Property, your trusted real estate partner in Rohtak. We provide residential and commercial property solutions with exceptional service.",
         status: "published",
         type: "page",
         createdAt: new Date(),
@@ -327,9 +327,9 @@ export const initializeContentPages: RequestHandler = async (req, res) => {
             <p>If you have any questions about this Privacy Policy, please contact us at privacy@aashishproperty.com</p>
           </div>
         `,
-        metaTitle: "Privacy Policy - Aashish Property",
+        metaTitle: "Privacy Policy - Ashish Property",
         metaDescription:
-          "Read our privacy policy to understand how Aashish Property collects, uses, and protects your personal information.",
+          "Read our privacy policy to understand how Ashish Property collects, uses, and protects your personal information.",
         status: "published",
         type: "policy",
         createdAt: new Date(),
@@ -344,13 +344,13 @@ export const initializeContentPages: RequestHandler = async (req, res) => {
             <p><strong>Last updated:</strong> ${new Date().toLocaleDateString()}</p>
             
             <h2>Acceptance of Terms</h2>
-            <p>By accessing and using the Aashish Property platform, you accept and agree to be bound by the terms and provision of this agreement.</p>
+            <p>By accessing and using the Ashish Property platform, you accept and agree to be bound by the terms and provision of this agreement.</p>
             
             <h2>Use License</h2>
-            <p>Permission is granted to temporarily download one copy of the materials on Aashish Property's website for personal, non-commercial transitory viewing only.</p>
+            <p>Permission is granted to temporarily download one copy of the materials on Ashish Property's website for personal, non-commercial transitory viewing only.</p>
             
             <h2>Disclaimer</h2>
-            <p>The materials on Aashish Property's website are provided on an 'as is' basis. Aashish Property makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+            <p>The materials on Ashish Property's website are provided on an 'as is' basis. Ashish Property makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
             
             <h2>User Responsibilities</h2>
             <p>Users are responsible for:</p>
@@ -365,15 +365,15 @@ export const initializeContentPages: RequestHandler = async (req, res) => {
             <p>All property listings must be accurate and comply with local regulations. False or misleading information may result in account suspension.</p>
             
             <h2>Limitation of Liability</h2>
-            <p>In no event shall Aashish Property or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Aashish Property's website.</p>
+            <p>In no event shall Ashish Property or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Ashish Property's website.</p>
             
             <h2>Contact Information</h2>
             <p>For questions about these Terms and Conditions, contact us at legal@aashishproperty.com</p>
           </div>
         `,
-        metaTitle: "Terms and Conditions - Aashish Property",
+        metaTitle: "Terms and Conditions - Ashish Property",
         metaDescription:
-          "Read the terms and conditions for using Aashish Property platform and services.",
+          "Read the terms and conditions for using Ashish Property platform and services.",
         status: "published",
         type: "terms",
         createdAt: new Date(),
@@ -388,7 +388,7 @@ export const initializeContentPages: RequestHandler = async (req, res) => {
             <p><strong>Last updated:</strong> ${new Date().toLocaleDateString()}</p>
             
             <h2>Our Commitment</h2>
-            <p>At Aashish Property, we strive to provide excellent service to all our clients. Our refund policy ensures fair treatment and customer satisfaction.</p>
+            <p>At Ashish Property, we strive to provide excellent service to all our clients. Our refund policy ensures fair treatment and customer satisfaction.</p>
             
             <h2>Service Charges</h2>
             <p>Service charges for property listings and promotional features are generally non-refundable once the service has been rendered.</p>
@@ -422,9 +422,9 @@ export const initializeContentPages: RequestHandler = async (req, res) => {
             <p>For refund requests, contact our support team at support@aashishproperty.com or call our customer service helpline.</p>
           </div>
         `,
-        metaTitle: "Refund Policy - Aashish Property",
+        metaTitle: "Refund Policy - Ashish Property",
         metaDescription:
-          "Understanding our refund policy for Aashish Property services and charges.",
+          "Understanding our refund policy for Ashish Property services and charges.",
         status: "published",
         type: "policy",
         createdAt: new Date(),
