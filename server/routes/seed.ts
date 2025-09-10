@@ -383,7 +383,7 @@ export const seedDatabase: RequestHandler = async (req, res) => {
     if (existingBanners === 0) {
       const defaultBanners = [
         {
-          title: "Welcome to Aashish Property",
+          title: "Welcome to Ashish Property",
           description: "Find your dream property in Rohtak",
           image:
             "https://via.placeholder.com/1200x300?text=Welcome+to+Aashish+Property",

@@ -42,7 +42,7 @@ export default function ContentPage() {
           if (data.data.metaTitle) {
             document.title = data.data.metaTitle;
           } else {
-            document.title = `${data.data.title} - Aashish Property`;
+            document.title = `${data.data.title} - Ashish Property`;
           }
 
           if (data.data.metaDescription) {
@@ -130,7 +130,7 @@ export default function ContentPage() {
               </div>
               <div className="flex items-center space-x-1">
                 <User className="h-4 w-4" />
-                <span>Aashish Property</span>
+                <span>Ashish Property</span>
               </div>
             </div>
           </header>

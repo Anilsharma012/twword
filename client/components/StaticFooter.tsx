@@ -33,7 +33,7 @@ export default function StaticFooter() {
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
                 <span className="text-[#C70000] font-bold text-xl">AP</span>
               </div>
-              <h3 className="text-2xl font-bold">Aashish Properties</h3>
+              <h3 className="text-2xl font-bold">Ashish Properties</h3>
             </div>
 
             <p className="text-red-100 text-sm leading-relaxed">

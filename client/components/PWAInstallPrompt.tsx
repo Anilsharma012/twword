@@ -104,7 +104,7 @@ export default function PWAInstallPrompt() {
             </div>
           </div>
 
-          <h3 className="font-bold text-lg mb-1">Aashish Property App</h3>
+          <h3 className="font-bold text-lg mb-1">Ashish Property App</h3>
           <p className="text-sm opacity-90 mb-2">Buy & Sell better with app</p>
 
           <div className="flex items-center justify-center space-x-1 mb-4">

@@ -538,7 +538,7 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
         status: "upcoming",
         launchDate: "2024-06-01",
         completionDate: "2026-12-31",
-        developer: "Aashish Properties",
+        developer: "Ashish Properties",
         amenities: ["Swimming Pool", "Gym", "Garden", "Parking", "Security"],
         images: [
           "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop",
@@ -566,7 +566,7 @@ export const initializeNewProjects: RequestHandler = async (req, res) => {
         status: "ongoing",
         launchDate: "2023-01-15",
         completionDate: "2025-06-30",
-        developer: "Aashish Properties",
+        developer: "Ashish Properties",
         amenities: ["Club House", "Elevator", "Power Backup", "Security"],
         images: [
           "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop",

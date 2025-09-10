@@ -41,7 +41,7 @@ export default function Header() {
             <span className="text-[#C70000] font-bold text-lg">A</span>
           </div>
           <span className="text-xl font-bold tracking-wide">
-            AASHISH PROPERTY
+            ASHISH PROPERTY
           </span>
         </div>
 

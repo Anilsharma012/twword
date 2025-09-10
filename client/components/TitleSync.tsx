@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const BRAND = "Aashish Properties";
+const BRAND = "Ashish Properties";
 
 export default function TitleSync() {
   const location = useLocation();
   useEffect(() => {
     const current = (document.title || "").trim();
     const lower = current.toLowerCase();
-    if (!current || !lower.includes("aashish")) {
+    if (!current || !lower.includes("ashish")) {
       document.title = BRAND;
     }
   }, [location.pathname]);
