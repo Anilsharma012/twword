@@ -34,6 +34,25 @@ const isConfigured = Boolean(
     firebaseConfig.appId,
 );
 export const isFirebaseConfigured = isConfigured;
+try {
+  const safeConfig = {
+    apiKey: firebaseConfig.apiKey ? "***SET***" : null,
+    authDomain: firebaseConfig.authDomain || null,
+    projectId: firebaseConfig.projectId || null,
+    appId: firebaseConfig.appId || null,
+  };
+  console.info("Firebase safe config:", safeConfig);
+  console.info("isConfigured:", isConfigured, "env present:", {
+    VITE_FIREBASE_API_KEY: Boolean(import.meta.env.VITE_FIREBASE_API_KEY),
+    VITE_FIREBASE_AUTH_DOMAIN: Boolean(
+      import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    ),
+    VITE_FIREBASE_PROJECT_ID: Boolean(import.meta.env.VITE_FIREBASE_PROJECT_ID),
+    VITE_FIREBASE_APP_ID: Boolean(import.meta.env.VITE_FIREBASE_APP_ID),
+  });
+} catch (e) {
+  // ignore
+}
 let app: any = null;
 let analytics: any = undefined;
 if (isConfigured) {
@@ -60,7 +79,10 @@ if (isConfigured && typeof window !== "undefined" && db) {
     } else if (err?.code === "unimplemented") {
       console.warn("Firestore persistence not available in this browser.");
     } else {
-      console.warn("Failed to enable Firestore persistence:", err?.message || err);
+      console.warn(
+        "Failed to enable Firestore persistence:",
+        err?.message || err,
+      );
     }
   });
 }

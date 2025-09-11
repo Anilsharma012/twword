@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BannerAd } from "@shared/types";
+import { safeFetch } from "../utils/network-utils";
 
 interface HomepageBannerProps {
   position: "homepage_top" | "homepage_middle" | "homepage_bottom";
@@ -32,19 +33,7 @@ export default function HomepageBanner({
     try {
       console.log(`🏷️ Fetching banners for position: ${position}`);
 
-      // Add timeout and error handling
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => {
-        console.log("⏰ Banners request timeout");
-        controller.abort();
-      }, 8000);
-
-      const response = await fetch(`/api/banners?active=true`, {
-        signal: controller.signal,
-        cache: "no-cache",
-      });
-
-      clearTimeout(timeoutId);
+      const response = await safeFetch(`/api/banners?active=true`, { timeout: 8000 });
 
       console.log("📡 Banners response:", {
         status: response.status,
@@ -66,16 +55,14 @@ export default function HomepageBanner({
         console.log(`⚠️ Banners request failed: ${response.status}`);
       }
     } catch (error: any) {
-      console.error("Error fetching banners:", {
-        error: error.message || error,
-        name: error.name,
-        position: position,
-      });
+      // Normalize error logging to avoid [object Object]
+      const errMsg = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+      console.error(`Error fetching banners (${position}): ${errMsg}`);
 
       // Provide appropriate logging based on error type
-      if (error.name === "AbortError") {
+      if (error?.name === "AbortError") {
         console.log("🔄 Banners request timed out");
-      } else if (error.message?.includes("Failed to fetch")) {
+      } else if (error?.message?.includes("Failed to fetch")) {
         console.log("🌐 Network connectivity issue for banners");
       }
 
