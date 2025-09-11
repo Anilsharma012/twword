@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import { BannerAd } from "@shared/types";
 import { safeFetch } from "../utils/network-utils";
 
