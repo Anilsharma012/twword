@@ -74,20 +74,7 @@ const PropertyAdsSlider: React.FC = () => {
 
         // Try to fetch advertisements first (using banners with home position)
         try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 5000);
-
-          const adsResponse = await fetch(
-            "/api/banners?active=true",
-            {
-              signal: controller.signal,
-              headers: {
-                "Cache-Control": "no-cache",
-              },
-            },
-          );
-
-          clearTimeout(timeoutId);
+          const adsResponse = await safeFetch("/api/banners?active=true", { timeout: 5000 });
 
           if (adsResponse.ok) {
             const adsData = await adsResponse.json();
@@ -108,30 +95,23 @@ const PropertyAdsSlider: React.FC = () => {
               setAds(mappedAds);
               console.log("✅ Loaded", mappedAds.length, "home advertisements");
             }
+          } else {
+            console.warn(`⚠️ Advertisement request failed: ${adsResponse.status}`);
           }
         } catch (error: any) {
-          if (error.name === "AbortError") {
+          if (error instanceof NetworkError) {
+            console.warn(`⚠️ Advertisement fetch failed: ${error.message} (${error.code})`);
+          } else if (error?.name === "AbortError") {
             console.warn("⏰ Advertisement fetch timed out");
-          } else if (error.message?.includes("Failed to fetch")) {
-            console.warn("🌐 Network issue fetching advertisements");
           } else {
-            console.warn("⚠️ Failed to fetch advertisements:", error);
+            console.warn("⚠️ Failed to fetch advertisements:", String(error));
           }
         }
 
         // Fetch featured properties as fallback
         try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 5000);
+          const propertiesResponse = await safeFetch("/api/properties/featured", { timeout: 5000 });
 
-          const propertiesResponse = await fetch("/api/properties/featured", {
-            signal: controller.signal,
-            headers: {
-              "Cache-Control": "no-cache",
-            },
-          });
-
-          clearTimeout(timeoutId);
           if (propertiesResponse.ok) {
             const propertiesData = await propertiesResponse.json();
             if (
@@ -146,14 +126,16 @@ const PropertyAdsSlider: React.FC = () => {
                 "featured properties",
               );
             }
+          } else {
+            console.warn(`⚠️ Featured properties request failed: ${propertiesResponse.status}`);
           }
         } catch (error: any) {
-          if (error.name === "AbortError") {
+          if (error instanceof NetworkError) {
+            console.warn(`⚠️ Featured properties fetch failed: ${error.message} (${error.code})`);
+          } else if (error?.name === "AbortError") {
             console.warn("⏰ Featured properties fetch timed out");
-          } else if (error.message?.includes("Failed to fetch")) {
-            console.warn("🌐 Network issue fetching featured properties");
           } else {
-            console.warn("⚠️ Failed to fetch featured properties:", error);
+            console.warn("⚠️ Failed to fetch featured properties:", String(error));
           }
         }
       } catch (error) {
