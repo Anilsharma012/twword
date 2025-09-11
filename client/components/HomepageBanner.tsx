@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BannerAd } from "@shared/types";
 import { safeFetch } from "../utils/network-utils";
 
