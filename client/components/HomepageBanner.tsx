@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BannerAd } from "@shared/types";
+import { safeFetch } from "../utils/network-utils";
 
 interface HomepageBannerProps {
   position: "homepage_top" | "homepage_middle" | "homepage_bottom";
