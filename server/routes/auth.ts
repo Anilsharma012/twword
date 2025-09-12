@@ -487,11 +487,11 @@ export const verifyOTP: RequestHandler = async (req, res) => {
       // approved -> proceed to user lookup/create
     } else {
       // Fallback: verify from DB (accept demo 123456)
-      const otpRecord = await db.collection("otps").findOne({
-        phone,
-        otp,
-        expiresAt: { $gt: new Date() },
-      });
+      // Try matching using normalized stored phone (E.164) or raw provided phone
+      const otpRecord =
+        (await db.collection("otps").findOne({ phone: to, otp, expiresAt: { $gt: new Date() } })) ||
+        (await db.collection("otps").findOne({ phone, otp, expiresAt: { $gt: new Date() } }));
+
       if (!otpRecord && otp !== "123456") {
         return res
           .status(400)
@@ -501,7 +501,7 @@ export const verifyOTP: RequestHandler = async (req, res) => {
     }
 
     // Find or create user by phone
-    let user = await db.collection("users").findOne({ phone });
+    let user = await db.collection("users").findOne({ $or: [{ phone: to }, { phone }] });
     if (!user) {
       const now = new Date();
       const newUser: any = {
