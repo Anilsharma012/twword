@@ -98,8 +98,11 @@ export class PhoneAuthService {
   private recaptchaVerifier: RecaptchaVerifier | null = null;
   private confirmationResult: ConfirmationResult | null = null;
 
-  // Initialize reCAPTCHA verifier
-  initializeRecaptcha(containerId: string): Promise<void> {
+  // Initialize reCAPTCHA verifier (default invisible)
+  initializeRecaptcha(
+    containerId: string,
+    size: "normal" | "compact" | "invisible" = "invisible",
+  ): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
         if (this.recaptchaVerifier) {
@@ -110,7 +113,7 @@ export class PhoneAuthService {
           return reject(new Error("Firebase not configured"));
         }
         this.recaptchaVerifier = new RecaptchaVerifier(auth, containerId, {
-          size: "normal",
+          size,
           callback: () => {
             console.log("reCAPTCHA solved");
             resolve();

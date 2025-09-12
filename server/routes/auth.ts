@@ -414,9 +414,11 @@ export const sendOTP: RequestHandler = async (req, res) => {
     // ---- Fallback (deterministic OTP for demo) ----
     const db = getDatabase();
     const otp = "123456";
-    await db.collection("otps").deleteMany({ phone });
+
+    // Normalize phone storage to E.164 (to) so send and verify use same key
+    await db.collection("otps").deleteMany({ phone: to });
     await db.collection("otps").insertOne({
-      phone,
+      phone: to,
       otp,
       createdAt: new Date(),
       expiresAt: new Date(Date.now() + 10 * 60 * 1000),
@@ -429,7 +431,7 @@ export const sendOTP: RequestHandler = async (req, res) => {
         (
           await db
             .collection("users")
-            .findOne({ phone }, { projection: { email: 1 } })
+            .findOne({ phone: to }, { projection: { email: 1 } })
         )?.email;
       if (toEmail) {
         const { sendEmail } = await import("../utils/mailer");
@@ -444,7 +446,7 @@ export const sendOTP: RequestHandler = async (req, res) => {
     }
 
     // TODO: integrate SMS gateway (MSG91/Textlocal etc.) here
-    console.log(`OTP (fallback) for ${phone}: ${otp}`);
+    console.log(`OTP (fallback) for ${to}: ${otp}`);
 
     return res.json({
       success: true,
@@ -485,28 +487,37 @@ export const verifyOTP: RequestHandler = async (req, res) => {
       // approved -> proceed to user lookup/create
     } else {
       // Fallback: verify from DB (accept demo 123456)
-      const otpRecord = await db.collection("otps").findOne({
-        phone,
-        otp,
-        expiresAt: { $gt: new Date() },
-      });
+      // Try matching using normalized stored phone (E.164) or raw provided phone
+      const otpRecord =
+        (await db
+          .collection("otps")
+          .findOne({ phone: to, otp, expiresAt: { $gt: new Date() } })) ||
+        (await db
+          .collection("otps")
+          .findOne({ phone, otp, expiresAt: { $gt: new Date() } }));
+
       if (!otpRecord && otp !== "123456") {
         return res
           .status(400)
           .json({ success: false, error: "Invalid or expired OTP" });
       }
-      if (otpRecord) await db.collection("otps").deleteOne({ _id: otpRecord._id });
+      if (otpRecord)
+        await db.collection("otps").deleteOne({ _id: otpRecord._id });
     }
 
     // Find or create user by phone
-    let user = await db.collection("users").findOne({ phone });
+    let user = await db
+      .collection("users")
+      .findOne({ $or: [{ phone: to }, { phone }] });
     if (!user) {
       const now = new Date();
       const newUser: any = {
         name: `User ${phone.slice(-4)}`,
         email: "",
         phone,
-        userType: ["seller", "buyer", "agent", "admin", "staff"].includes(userType)
+        userType: ["seller", "buyer", "agent", "admin", "staff"].includes(
+          userType,
+        )
           ? userType
           : "seller",
         createdAt: now,
@@ -515,10 +526,12 @@ export const verifyOTP: RequestHandler = async (req, res) => {
       const ins = await db.collection("users").insertOne(newUser);
       user = { _id: ins.insertedId, ...newUser };
     } else {
-      await db.collection("users").updateOne(
-        { _id: user._id },
-        { $set: { lastLogin: new Date(), updatedAt: new Date() } }
-      );
+      await db
+        .collection("users")
+        .updateOne(
+          { _id: user._id },
+          { $set: { lastLogin: new Date(), updatedAt: new Date() } },
+        );
     }
 
     // Generate JWT token
@@ -529,7 +542,7 @@ export const verifyOTP: RequestHandler = async (req, res) => {
         email: user.email,
       },
       JWT_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
     );
 
     const response: ApiResponse<{ token: string; user: any }> = {
@@ -661,7 +674,9 @@ export const googleAuth: RequestHandler = async (req, res) => {
       decoded = await admin.auth().verifyIdToken(idToken);
       console.log("verifyIdToken OK for:", decoded.email, "uid:", decoded.uid);
     } catch (e) {
-      console.warn("firebase-admin unavailable, falling back to tokeninfo verification");
+      console.warn(
+        "firebase-admin unavailable, falling back to tokeninfo verification",
+      );
       const resp = await fetch(
         `https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`,
       );
@@ -670,7 +685,8 @@ export const googleAuth: RequestHandler = async (req, res) => {
         throw new Error(`tokeninfo failed: HTTP ${resp.status} ${txt}`);
       }
       const info = (await resp.json()) as any;
-      const projectId = process.env.FIREBASE_PROJECT_ID || process.env.VITE_FIREBASE_PROJECT_ID;
+      const projectId =
+        process.env.FIREBASE_PROJECT_ID || process.env.VITE_FIREBASE_PROJECT_ID;
       if (!projectId) throw new Error("FIREBASE_PROJECT_ID missing");
       const issOk = info.iss === `https://securetoken.google.com/${projectId}`;
       const audOk = info.aud === projectId;
@@ -679,7 +695,12 @@ export const googleAuth: RequestHandler = async (req, res) => {
         throw new Error("Invalid ID token claims");
       }
       decoded = { email: info.email, name: info.name || "", uid: info.sub };
-      console.log("tokeninfo verification OK for:", decoded.email, "uid:", decoded.uid);
+      console.log(
+        "tokeninfo verification OK for:",
+        decoded.email,
+        "uid:",
+        decoded.uid,
+      );
     }
 
     const email = decoded.email!;

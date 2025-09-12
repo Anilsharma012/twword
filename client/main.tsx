@@ -28,7 +28,7 @@ import {
   subscribeTokenToGeneralTopic,
 } from "./lib/messaging";
 
-function initializeApp() {
+function bootstrapApp() {
   if (!root) {
     root = createRoot(container);
   }
@@ -47,7 +47,17 @@ function initializeApp() {
 }
 
 // Initialize the app
-initializeApp();
+bootstrapApp();
+
+// Hot Module Replacement (HMR) support for development
+if (import.meta.hot) {
+  import.meta.hot.accept("./App", () => {
+    // Re-render the app when App.tsx changes, but don't create a new root
+    if (root) {
+      root.render(<App />);
+    }
+  });
+}
 
 // Hot Module Replacement (HMR) support for development
 if (import.meta.hot) {

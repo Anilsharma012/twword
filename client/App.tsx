@@ -35,6 +35,8 @@ import Agents from "./pages/Agents";
 import Login from "./pages/Login";
 import UserLogin from "./pages/UserLogin";
 import EnhancedUserLogin from "./pages/EnhancedUserLogin";
+import LoginModal from "./components/auth/LoginModal";
+import { SellerProtectedRoute } from "./components/auth/ProtectedRoute";
 import ComprehensiveAuth from "./pages/ComprehensiveAuth";
 import UserDashboard from "./pages/UserDashboard";
 import PostProperty from "./pages/PostProperty";
@@ -147,7 +149,7 @@ function App() {
                   <Route path="/step3-test" element={<Step3Test />} />
                   <Route path="/my-account" element={<MyAccount />} />
                   <Route path="/agents" element={<Agents />} />
-                  <Route path="/login" element={<EnhancedUserLogin />} />
+                  <Route path="/login" element={<LoginModal />} />
                   <Route path="/user-login" element={<EnhancedUserLogin />} />
                   <Route path="/auth" element={<ComprehensiveAuth />} />
                   <Route path="/firebase-auth" element={<FirebaseAuth />} />
@@ -158,10 +160,21 @@ function App() {
                   <Route path="/user" element={<User />} />
                   <Route path="/user-dashboard" element={<UserDashboard />} />
                   <Route path="/post-property" element={<PostProperty />} />
-                  <Route path="/seller" element={<Seller />} />
+                  <Route
+                    path="/seller"
+                    element={
+                      <SellerProtectedRoute>
+                        <Seller />
+                      </SellerProtectedRoute>
+                    }
+                  />
                   <Route
                     path="/seller-dashboard"
-                    element={<SellerDashboard />}
+                    element={
+                      <SellerProtectedRoute>
+                        <SellerDashboard />
+                      </SellerProtectedRoute>
+                    }
                   />
                   <Route path="/support/:action" element={<Support />} />
                   <Route

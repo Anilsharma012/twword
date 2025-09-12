@@ -3,7 +3,11 @@ import cors from "cors";
 import "dotenv/config";
 
 import { connectToDatabase, getDatabase } from "./db/mongodb";
-import { authenticateToken, requireAdmin, requireSellerOrAgent } from "./middleware/auth";
+import {
+  authenticateToken,
+  requireAdmin,
+  requireSellerOrAgent,
+} from "./middleware/auth";
 import { ChatSocketServer } from "./socketio";
 
 // Property routes
@@ -373,6 +377,7 @@ import {
 } from "./routes/notifications";
 import { getUnreadNotificationsCount } from "./routes/notifications-unread";
 import { subscribeToTopic } from "./routes/notifications-subscribe";
+import { requestEmailOtp, verifyEmailOtp } from "./routes/email-otp";
 
 // Homepage slider routes
 import {
@@ -699,6 +704,10 @@ export function createServer() {
     resendEmailVerification,
   );
 
+  // Email OTP auth routes (separate from phone OTP to avoid path conflicts)
+  app.post("/api/auth/email/request-otp", requestEmailOtp);
+  app.post("/api/auth/email/verify-otp", verifyEmailOtp);
+
   // Property routes
   app.get("/api/properties", getProperties);
   app.get("/api/properties/featured", getFeaturedProperties);
@@ -986,24 +995,22 @@ export function createServer() {
           disabledRoutes = [],
           testMode = false,
         } = req.body || {};
-        await db
-          .collection("admin_settings")
-          .updateOne(
-            {},
-            {
-              $set: {
-                adsense: {
-                  enabled: !!enabled,
-                  clientId: clientId || "",
-                  slots,
-                  disabledRoutes,
-                  testMode: !!testMode,
-                },
-                updatedAt: new Date(),
+        await db.collection("admin_settings").updateOne(
+          {},
+          {
+            $set: {
+              adsense: {
+                enabled: !!enabled,
+                clientId: clientId || "",
+                slots,
+                disabledRoutes,
+                testMode: !!testMode,
               },
+              updatedAt: new Date(),
             },
-            { upsert: true },
-          );
+          },
+          { upsert: true },
+        );
         res.json({
           success: true,
           data: { message: "AdSense settings updated" },
