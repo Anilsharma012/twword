@@ -149,7 +149,7 @@ function App() {
                   <Route path="/step3-test" element={<Step3Test />} />
                   <Route path="/my-account" element={<MyAccount />} />
                   <Route path="/agents" element={<Agents />} />
-                  <Route path="/login" element={<EnhancedUserLogin />} />
+                  <Route path="/login" element={<LoginModal />} />
                   <Route path="/user-login" element={<EnhancedUserLogin />} />
                   <Route path="/auth" element={<ComprehensiveAuth />} />
                   <Route path="/firebase-auth" element={<FirebaseAuth />} />
