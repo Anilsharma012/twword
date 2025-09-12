@@ -160,10 +160,10 @@ function App() {
                   <Route path="/user" element={<User />} />
                   <Route path="/user-dashboard" element={<UserDashboard />} />
                   <Route path="/post-property" element={<PostProperty />} />
-                  <Route path="/seller" element={<Seller />} />
+                  <Route path="/seller" element={<SellerProtectedRoute><Seller /></SellerProtectedRoute>} />
                   <Route
                     path="/seller-dashboard"
-                    element={<SellerDashboard />}
+                    element={<SellerProtectedRoute><SellerDashboard /></SellerProtectedRoute>}
                   />
                   <Route path="/support/:action" element={<Support />} />
                   <Route
