@@ -700,11 +700,8 @@ export function createServer() {
   );
 
   // Email OTP auth routes (separate from phone OTP to avoid path conflicts)
-  {
-    const { requestEmailOtp, verifyEmailOtp } = await import("./routes/email-otp");
-    app.post("/api/auth/email/request-otp", requestEmailOtp);
-    app.post("/api/auth/email/verify-otp", verifyEmailOtp);
-  }
+  app.post("/api/auth/email/request-otp", requestEmailOtp);
+  app.post("/api/auth/email/verify-otp", verifyEmailOtp);
 
   // Property routes
   app.get("/api/properties", getProperties);
