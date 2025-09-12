@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { auth, RecaptchaVerifier, signInWithPhoneNumber } from "../../lib/firebaseClient";
+import {
+  auth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+} from "../../lib/firebaseClient";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
@@ -39,7 +43,9 @@ export default function LoginModal() {
     // Prepare recaptcha container
     if (!recaptchaRef.current) return;
     // Clean previous verifier
-    try { verifierRef.current?.clear?.(); } catch {}
+    try {
+      verifierRef.current?.clear?.();
+    } catch {}
     verifierRef.current = null;
   }, [tab]);
 
@@ -107,10 +113,14 @@ export default function LoginModal() {
 
   const verifyEmail = async () => {
     setError("");
-    if (!emailOtp || emailOtp.length !== 6) return setError("Enter 6-digit OTP");
+    if (!emailOtp || emailOtp.length !== 6)
+      return setError("Enter 6-digit OTP");
     setLoading(true);
     try {
-      const { data } = await api.post<EmailVerifyResponse>("auth/email/verify-otp", { email, otp: emailOtp });
+      const { data } = await api.post<EmailVerifyResponse>(
+        "auth/email/verify-otp",
+        { email, otp: emailOtp },
+      );
       if (data?.success && data.data) {
         login(data.data.token, data.data.user);
       } else setError(data?.error || "Invalid OTP");
@@ -125,10 +135,16 @@ export default function LoginModal() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-center">Sign in to Ashish Property</CardTitle>
+          <CardTitle className="text-center">
+            Sign in to Ashish Property
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          {error && <div className="mb-3 text-sm text-red-600" role="alert">{error}</div>}
+          {error && (
+            <div className="mb-3 text-sm text-red-600" role="alert">
+              {error}
+            </div>
+          )}
 
           <Tabs value={tab} onValueChange={(v) => setTab(v as any)}>
             <TabsList className="grid grid-cols-2 w-full">
@@ -137,19 +153,55 @@ export default function LoginModal() {
             </TabsList>
 
             <TabsContent value="phone">
-              <div ref={recaptchaRef} id="recaptcha-container" className="hidden" aria-hidden="true" />
+              <div
+                ref={recaptchaRef}
+                id="recaptcha-container"
+                className="hidden"
+                aria-hidden="true"
+              />
               {!otpSent ? (
                 <div className="space-y-3">
                   <div className="grid grid-cols-[88px_1fr] gap-2">
-                    <Input aria-label="Country code" value={countryCode} onChange={(e)=>setCountryCode(e.target.value)} />
-                    <Input aria-label="Phone" inputMode="tel" value={phone} onChange={(e)=>setPhone(e.target.value)} placeholder="Phone number" />
+                    <Input
+                      aria-label="Country code"
+                      value={countryCode}
+                      onChange={(e) => setCountryCode(e.target.value)}
+                    />
+                    <Input
+                      aria-label="Phone"
+                      inputMode="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="Phone number"
+                    />
                   </div>
-                  <Button className="w-full" disabled={loading} onClick={sendPhoneOtp}>{loading?"Sending...":"Send OTP"}</Button>
+                  <Button
+                    className="w-full"
+                    disabled={loading}
+                    onClick={sendPhoneOtp}
+                  >
+                    {loading ? "Sending..." : "Send OTP"}
+                  </Button>
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <Input aria-label="OTP code" inputMode="numeric" maxLength={6} value={code} onChange={(e)=>setCode(e.target.value.replace(/[^0-9]/g, ""))} placeholder="Enter 6-digit code" />
-                  <Button className="w-full" disabled={loading} onClick={verifyPhoneOtp}>{loading?"Verifying...":"Verify"}</Button>
+                  <Input
+                    aria-label="OTP code"
+                    inputMode="numeric"
+                    maxLength={6}
+                    value={code}
+                    onChange={(e) =>
+                      setCode(e.target.value.replace(/[^0-9]/g, ""))
+                    }
+                    placeholder="Enter 6-digit code"
+                  />
+                  <Button
+                    className="w-full"
+                    disabled={loading}
+                    onClick={verifyPhoneOtp}
+                  >
+                    {loading ? "Verifying..." : "Verify"}
+                  </Button>
                 </div>
               )}
             </TabsContent>
@@ -157,19 +209,47 @@ export default function LoginModal() {
             <TabsContent value="email">
               {!emailOtpSent ? (
                 <div className="space-y-3">
-                  <Input type="email" aria-label="Email" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="you@example.com" />
-                  <Button className="w-full" disabled={loading} onClick={requestEmailOtp}>{loading?"Sending...":"Send OTP"}</Button>
+                  <Input
+                    type="email"
+                    aria-label="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                  />
+                  <Button
+                    className="w-full"
+                    disabled={loading}
+                    onClick={requestEmailOtp}
+                  >
+                    {loading ? "Sending..." : "Send OTP"}
+                  </Button>
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <Input aria-label="Email OTP" value={emailOtp} onChange={(e)=>setEmailOtp(e.target.value.replace(/[^0-9]/g, ""))} maxLength={6} placeholder="Enter 6-digit OTP" />
-                  <Button className="w-full" disabled={loading} onClick={verifyEmail}>{loading?"Verifying...":"Verify"}</Button>
+                  <Input
+                    aria-label="Email OTP"
+                    value={emailOtp}
+                    onChange={(e) =>
+                      setEmailOtp(e.target.value.replace(/[^0-9]/g, ""))
+                    }
+                    maxLength={6}
+                    placeholder="Enter 6-digit OTP"
+                  />
+                  <Button
+                    className="w-full"
+                    disabled={loading}
+                    onClick={verifyEmail}
+                  >
+                    {loading ? "Verifying..." : "Verify"}
+                  </Button>
                 </div>
               )}
             </TabsContent>
           </Tabs>
 
-          <p className="mt-4 text-xs text-gray-500">Note: For Gmail, use an App Password. Normal password will not work.</p>
+          <p className="mt-4 text-xs text-gray-500">
+            Note: For Gmail, use an App Password. Normal password will not work.
+          </p>
         </CardContent>
       </Card>
     </div>

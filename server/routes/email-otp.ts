@@ -7,7 +7,8 @@ import { getDatabase } from "../db/mongodb";
 // In-memory OTP store with TTL (email -> { code, expiresAt })
 const emailOtpStore = new Map<string, { code: string; expiresAt: number }>();
 
-const JWT_SECRET = process.env.JWT_MOCK_SECRET || process.env.JWT_SECRET || "change-this";
+const JWT_SECRET =
+  process.env.JWT_MOCK_SECRET || process.env.JWT_SECRET || "change-this";
 
 function generateOtp(): string {
   return String(Math.floor(100000 + Math.random() * 900000));
@@ -21,7 +22,9 @@ export const requestEmailOtp: RequestHandler = async (req, res) => {
   try {
     const { email } = req.body || {};
     if (!email || typeof email !== "string") {
-      return res.status(400).json({ success: false, error: "Valid email is required" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Valid email is required" });
     }
 
     const code = generateOtp();
@@ -35,7 +38,9 @@ export const requestEmailOtp: RequestHandler = async (req, res) => {
       await sendEmail(email, subject, html, `Your OTP code is ${code}`);
     } catch (e: any) {
       // Do not leak internals; still keep code in store for retries
-      return res.status(500).json({ success: false, error: "Failed to send OTP email" });
+      return res
+        .status(500)
+        .json({ success: false, error: "Failed to send OTP email" });
     }
 
     return res.json({ success: true, data: { message: "OTP sent" } });
@@ -48,12 +53,16 @@ export const verifyEmailOtp: RequestHandler = async (req, res) => {
   try {
     const { email, otp } = req.body || {};
     if (!email || !otp) {
-      return res.status(400).json({ success: false, error: "Email and OTP are required" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Email and OTP are required" });
     }
 
     const rec = emailOtpStore.get(String(email).toLowerCase());
     if (!rec || rec.code !== String(otp) || isExpired(rec.expiresAt)) {
-      return res.status(400).json({ success: false, error: "Invalid or expired OTP" });
+      return res
+        .status(400)
+        .json({ success: false, error: "Invalid or expired OTP" });
     }
 
     // One-time use: delete after successful verification
@@ -65,13 +74,24 @@ export const verifyEmailOtp: RequestHandler = async (req, res) => {
     if (!user) {
       const now = new Date();
       const name = email.split("@")[0];
-      const doc = { name, email, phone: "", userType: "seller", createdAt: now, updatedAt: now };
+      const doc = {
+        name,
+        email,
+        phone: "",
+        userType: "seller",
+        createdAt: now,
+        updatedAt: now,
+      };
       const ins = await db.collection("users").insertOne(doc as any);
       user = { _id: ins.insertedId, ...doc } as any;
     }
 
     const token = jwt.sign(
-      { userId: String(user._id), userType: user.userType || "seller", email: user.email },
+      {
+        userId: String(user._id),
+        userType: user.userType || "seller",
+        email: user.email,
+      },
       JWT_SECRET,
       { expiresIn: "7d" },
     );

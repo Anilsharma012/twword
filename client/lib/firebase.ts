@@ -99,7 +99,10 @@ export class PhoneAuthService {
   private confirmationResult: ConfirmationResult | null = null;
 
   // Initialize reCAPTCHA verifier (default invisible)
-  initializeRecaptcha(containerId: string, size: "normal" | "compact" | "invisible" = "invisible"): Promise<void> {
+  initializeRecaptcha(
+    containerId: string,
+    size: "normal" | "compact" | "invisible" = "invisible",
+  ): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
         if (this.recaptchaVerifier) {
