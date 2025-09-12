@@ -11,15 +11,15 @@ async function loadEmailConfig() {
     const cfg = settings?.email || {};
     const host = cfg.smtpHost || process.env.SMTP_HOST || "smtp.gmail.com";
     const port = Number(cfg.smtpPort || process.env.SMTP_PORT || 587);
-    const user = cfg.smtpUsername || process.env.SMTP_USERNAME || "";
-    const pass = cfg.smtpPassword || process.env.SMTP_PASSWORD || "";
+    const user = cfg.smtpUsername || process.env.SMTP_USERNAME || process.env.SMTP_USER || "";
+    const pass = cfg.smtpPassword || process.env.SMTP_PASSWORD || process.env.SMTP_PASS || "";
     const from = cfg.fromEmail || process.env.SMTP_FROM || user;
     return { host, port, user, pass, from };
   } catch {
     const host = process.env.SMTP_HOST || "smtp.gmail.com";
     const port = Number(process.env.SMTP_PORT || 587);
-    const user = process.env.SMTP_USERNAME || "";
-    const pass = process.env.SMTP_PASSWORD || "";
+    const user = process.env.SMTP_USERNAME || process.env.SMTP_USER || "";
+    const pass = process.env.SMTP_PASSWORD || process.env.SMTP_PASS || "";
     const from = process.env.SMTP_FROM || user;
     return { host, port, user, pass, from };
   }
