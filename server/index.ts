@@ -373,6 +373,7 @@ import {
 } from "./routes/notifications";
 import { getUnreadNotificationsCount } from "./routes/notifications-unread";
 import { subscribeToTopic } from "./routes/notifications-subscribe";
+import { requestEmailOtp, verifyEmailOtp } from "./routes/email-otp";
 
 // Homepage slider routes
 import {
