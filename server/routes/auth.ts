@@ -414,9 +414,11 @@ export const sendOTP: RequestHandler = async (req, res) => {
     // ---- Fallback (deterministic OTP for demo) ----
     const db = getDatabase();
     const otp = "123456";
-    await db.collection("otps").deleteMany({ phone });
+
+    // Normalize phone storage to E.164 (to) so send and verify use same key
+    await db.collection("otps").deleteMany({ phone: to });
     await db.collection("otps").insertOne({
-      phone,
+      phone: to,
       otp,
       createdAt: new Date(),
       expiresAt: new Date(Date.now() + 10 * 60 * 1000),
@@ -429,7 +431,7 @@ export const sendOTP: RequestHandler = async (req, res) => {
         (
           await db
             .collection("users")
-            .findOne({ phone }, { projection: { email: 1 } })
+            .findOne({ phone: to }, { projection: { email: 1 } })
         )?.email;
       if (toEmail) {
         const { sendEmail } = await import("../utils/mailer");
@@ -444,7 +446,7 @@ export const sendOTP: RequestHandler = async (req, res) => {
     }
 
     // TODO: integrate SMS gateway (MSG91/Textlocal etc.) here
-    console.log(`OTP (fallback) for ${phone}: ${otp}`);
+    console.log(`OTP (fallback) for ${to}: ${otp}`);
 
     return res.json({
       success: true,
