@@ -35,6 +35,8 @@ import Agents from "./pages/Agents";
 import Login from "./pages/Login";
 import UserLogin from "./pages/UserLogin";
 import EnhancedUserLogin from "./pages/EnhancedUserLogin";
+import LoginModal from "./components/auth/LoginModal";
+import { SellerProtectedRoute } from "./components/auth/ProtectedRoute";
 import ComprehensiveAuth from "./pages/ComprehensiveAuth";
 import UserDashboard from "./pages/UserDashboard";
 import PostProperty from "./pages/PostProperty";
